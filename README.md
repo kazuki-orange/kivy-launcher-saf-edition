@@ -1,12 +1,12 @@
-# Kivy Launcher 2
+# Kivy Launcher SAF Edition
 
 A modern, unofficial update to the original Kivy Launcher, specifically redesigned for newer Android versions (Android 10+).
 
-## Why Kivy Launcher 2?
+## Why Kivy Launcher SAF Edition?
 
 The original Kivy Launcher struggled with modern Android's **Scoped Storage** and **Storage Access Framework (SAF)** requirements. On newer Android devices, apps can no longer freely access `/sdcard/kivy`.
 
-**Kivy Launcher 2** solves this by:
+**Kivy Launcher SAF Edition** solves this by:
 1.  **Using SAF:** Letting you pick any folder using the native Android directory picker.
 2.  **Copy-to-Cache Execution:** Automatically copying your Kivy app to a private internal cache directory before execution. This ensures that standard Python features like `import`, `open()`, and `os.chdir()` work perfectly, even when the source files are in restricted storage areas.
 
@@ -41,10 +41,11 @@ In each project folder, create a file named `android.txt` to define the app's me
 title=My Cool App
 author=Your Name
 orientation=portrait
+logo=icon.png (optional)
 ```
 
-### 3. Launch with Kivy Launcher 2
-1.  Open **Kivy Launcher 2** on your Android device.
+### 3. Launch with Kivy Launcher SAF Edition
+1.  Open **Kivy Launcher SAF Edition** on your Android device.
 2.  Tap **"Select Folder"**.
 3.  Use the system picker to navigate to and select your `my_kivy_apps` folder.
 4.  Your apps will appear in the list. Tap one to launch!
@@ -52,7 +53,7 @@ orientation=portrait
 ## Technical Implementation Notes
 
 ### The Copy-to-Cache Loop
-Because Python's standard library cannot interact directly with `content://` URIs provided by SAF, Kivy Launcher 2 performs a "Recursive Copy" from the SAF URI to the app's internal `cache` directory (`/data/user/0/.../cache/temp_app`). 
+Because Python's standard library cannot interact directly with `content://` URIs provided by SAF, Kivy Launcher SAF Edition performs a "Recursive Copy" from the SAF URI to the app's internal `cache` directory (`/data/user/0/.../cache/temp_app`). 
 -   The app is then executed from this local filesystem path.
 -   This allows for 100% compatibility with existing Kivy apps without code changes.
 
@@ -70,7 +71,6 @@ buildozer android debug deploy run
 ### Key Requirements
 The project relies on:
 -   `pyjnius` for deep Android API integration.
--   `androidstorage4kivy` (optional/integrated) for storage handling.
 -   Native `androidx.documentfile` for SAF operations.
 
 ---
