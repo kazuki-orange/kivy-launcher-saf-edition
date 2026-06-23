@@ -72,6 +72,13 @@ class ScreenTransition:
             activity       = PythonActivity.mActivity
             Intent         = autoclass("android.content.Intent")
             String         = autoclass("java.lang.String") # Stringをインポート
+            Context        = autoclass("android.content.Context")
+
+            # 遷移先アプリのサブパスを SharedPreferences に保存
+            prefs = activity.getSharedPreferences("LauncherPrefs", Context.MODE_PRIVATE)
+            editor = prefs.edit()
+            editor.putString("selected_subpath", String(app_name))
+            editor.commit()
 
             pm = activity.getPackageManager()
             # 常に自分自身のメインActivityを取得
