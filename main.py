@@ -9,6 +9,9 @@ def run_entrypoint(entrypoint, app_dir=None):
     # 1. 現在のディレクトリを覚えておく
     original_cwd = os.getcwd()
 
+    # モジュールキャッシュのクリーンアップ用に初期スナップショットを取得
+    initial_modules = dict(sys.modules)
+
     if app_dir:
         os.chdir(app_dir)
         if app_dir not in sys.path:
@@ -21,7 +24,13 @@ def run_entrypoint(entrypoint, app_dir=None):
     finally:
         # 2. 【重要】子アプリがどう終わっても、必ず元の場所に戻る
         os.chdir(original_cwd)
-        # 必要に応じて sys.path から app_dir を消す処理を追加しても良い
+        if app_dir and app_dir in sys.path:
+            sys.path.remove(app_dir)
+
+        # アプリ実行中にロードされたモジュールを削除し、キャッシュの干渉を防ぐ
+        for mod_name in list(sys.modules.keys()):
+            if mod_name not in initial_modules:
+                del sys.modules[mod_name]
 
 def run_launcher():
     from launcher.app import Launcher
