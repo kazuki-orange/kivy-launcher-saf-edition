@@ -38,7 +38,8 @@ version = 0.1
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
 requirements =
-    python3,
+    python3==3.11.5,
+    hostpython3==3.11.5,
     kivy,
     kivymd,
     android,
@@ -49,7 +50,10 @@ requirements =
     asyncgui,
     kivy_garden.i18n,
     kivy_garden.draggable,
-    numpy
+    numpy,
+    pandas,
+    flask,
+    flask-socketio
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -106,9 +110,6 @@ fullscreen = 0
 
 # (list) Permissions
 android.permissions =
-    READ_EXTERNAL_STORAGE,
-    WRITE_EXTERNAL_STORAGE,
-    MANAGE_EXTERNAL_STORAGE,
     ACCESS_COARSE_LOCATION,
     ACCESS_FINE_LOCATION,
     ACCESS_LOCATION_EXTRA_COMMANDS,
@@ -160,7 +161,7 @@ android.permissions =
 android.api = 33
 
 # (int) Minimum API your APK / AAB will support.
-android.minapi = 21
+android.minapi = 24
 
 # (int) Android SDK version to use
 #android.sdk = 20
@@ -169,7 +170,7 @@ android.minapi = 21
 #android.ndk = 19b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-#android.ndk_api = 21
+android.ndk_api = 24
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 #android.private_storage = True
